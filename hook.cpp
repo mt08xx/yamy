@@ -810,6 +810,9 @@ static LRESULT CALLBACK lowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lP
 
 	if (g.m_keyboardDetour && g.m_engine) {
 		unsigned int result;
+		if (nCode == HC_ACTION && pKbll->vkCode == VK_TAB && pKbll->flags & LLKHF_ALTDOWN) {
+			goto through;
+		}
 		result = g.m_keyboardDetour(g.m_engine, wParam, lParam);
 		if (result) {
 			return 1;
